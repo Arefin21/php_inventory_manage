@@ -1,5 +1,9 @@
 <?php
 
+session_start();
+$_SESSION['user']='';
+$_SESSION['userid']='';
+
 include "auth/connection.php";
 $conn=connect();
 $m= '';
@@ -11,8 +15,14 @@ if(isset($_POST['submit'])){
     $res=$conn->query($sql);
 
     if(mysqli_num_rows($res)==1){
+
+        $user=mysqli_fetch_assoc($res);
+        $_SESSION['user']=$user['name'];
+        $_SESSION['userid']=$user['userid'];
+
         header('Location:dashboard.php');
     }else{
+
         $m='Credential mismatch';
     }
 }
