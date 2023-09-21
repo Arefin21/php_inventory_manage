@@ -6,27 +6,45 @@
     $m='';
     $conn=connect();
 
-    // if(isset($_POST['submit'])){
-    //     $pName= $_POST['pname'];
-    //     $buy= $_POST['buy'];
-    //     $img= $_FILES['pimage'];
-    //     $iName= $img['name'];
-    //     $tempName= $img['tmp_name'];
-    //     $format= explode('.', $iName);
-    //     $actualName= strtolower($format[0]);
-    //     $actualFormat= strtolower($format[1]);
-    //     $allowedFormats= ['jpg', 'png', 'jpeg', 'gif'];
+    if(isset($_POST['submit'])){
+        $pName= $_POST['pname'];
+        $buy= $_POST['buy'];
+        $img= $_FILES['pimage'];
+        
+        $iName= $img['name'];
+        $tempName= $img['tmp_name'];
+        $format= explode('.', $iName);
+        $actualName= strtolower($format[0]);
+        $actualFormat= strtolower($format[1]);
+        $allowedFormats= ['jpg', 'png', 'jpeg', 'gif'];
 
-    //     if(in_array($actualFormat, $allowedFormats)){
-    //         $location= 'Uploads/'.$actualName.'.'.$actualFormat;
-    //         $sql= "INSERT INTO products(name, bought, image, created_at) VALUES ('$pName', '$buy', '$location', current_timestamp())";
-    //         if($conn->query($sql)===true){
-    //             move_uploaded_file($tempName, $location);
-    //             $m= "Product Inserted!";
-    //         }
-    //     }
+        // $actualFormat=pathinfo($img['name'],PATHINFO_EXTENSION);
 
-    // }
+        if(in_array($actualFormat, $allowedFormats)){
+            $location= 'Uploads/'.$actualName.'.'.$actualFormat;
+
+            // $location='Uploads/'.strtolower(pathinfo($img['name'],PATHINFO_EXTENSION)).'.'.$actualFormat;
+
+            $sql= "INSERT INTO products(name, bought, image, created_at) VALUES 
+            ('$pName', '$buy', '$location', current_timestamp())";
+
+            if($conn->query($sql)===true){
+                move_uploaded_file($tempName, $location);
+                $m= "Product Inserted!";
+            }
+
+            // if(move_uploaded_file($img['tmp_name'],$location)&& 
+            // $conn->query("INSERT INTO products(name, bought, image, created_at) 
+            // VALUES ('$pName', '$buy', '$location', current_timestamp())")){
+
+            //     $m="Product Inserted";
+            // header("Location: your_success_page.php"); // Redirect to a success page
+            // exit(); // Ensure the script stops executing
+            // }
+
+        }
+
+    }
 
     $sql= "SELECT * from products";
     $res= $conn->query($sql);
@@ -82,50 +100,50 @@
                             Add New Product
                         </button>
                         <h2><?php echo $m; ?></h2>
-                        <div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-scrollable" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
+    <div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
 
-                                        <button style="background-color: #ffce00;" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <h2 class="modal-title" id="exampleModalScrollableTitle">Add New Product</h2>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form method="POST" action="products.php" enctype="multipart/form-data">
-                                            <div class="form-group pt-20">
-                                                <div class="col-sm-4">
-                                                    <label for="name" class="pr-10"> Product Name</label>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <input name="pname" type="text" class="login-input" placeholder="Product Name" id="name" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group pt-20">
-                                                <div class="col-sm-4">
-                                                    <label for="buy" class="pr-10"> Buying Amount</label>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <input name="buy" type="text" class="login-input" placeholder="Buying Amount" id="buy" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group pt-20">
-                                                <div class="col-sm-4">
-                                                    <label for="pimage" class="pr-10"> Product Image</label>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <input name="pimage" class="pl-20" type="file" id="pimage" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group" style="text-align: center;">
-                                                <button type="submit" value="submit" name="submit" class="btn btn-success">Add</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+                    <button style="background-color: #ffce00;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h2 class="modal-title" id="exampleModalScrollableTitle">Add New Product</h2>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="products.php" enctype="multipart/form-data">
+                        <div class="form-group pt-20">
+                            <div class="col-sm-4">
+                                <label for="name" class="pr-10"> Product Name</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <input name="pname" type="text" class="login-input" placeholder="Product Name" id="name" required>
                             </div>
                         </div>
+                        <div class="form-group pt-20">
+                            <div class="col-sm-4">
+                                <label for="buy" class="pr-10"> Buying Amount</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <input name="buy" type="text" class="login-input" placeholder="Buying Amount" id="buy" required>
+                            </div>
+                        </div>
+                        <div class="form-group pt-20">
+                            <div class="col-sm-4">
+                                <label for="pimage" class="pr-10"> Product Image</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <input name="pimage" class="pl-20" type="file" id="pimage" required>
+                            </div>
+                        </div>
+                        <div class="form-group" style="text-align: center;">
+                            <button type="submit" value="submit" name="submit" class="btn btn-success">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
                     </div>
                     <div class="table_container">
                         <h1 style="text-align: center;">Products Table</h1>
@@ -141,32 +159,32 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                        if(mysqli_num_rows($res)>0){
-                                            while($row= mysqli_fetch_assoc($res)){
-                                                $stock= $row['bought']-$row['sold'];
-                                                echo "<tr>";
-                                                echo "<td>".$row['name']."</td>";
+                    <?php
+                        if(mysqli_num_rows($res)>0){
+                            while($row= mysqli_fetch_assoc($res)){
+                                $stock= $row['bought']-$row['sold'];
+                                echo "<tr>";
+                                echo "<td>".$row['name']."</td>";
 
-                                                echo "<td>".$row['bought']."</td>";
+                                echo "<td>".$row['bought']."</td>";
 
-                                                echo "<td>".$row['sold']."</td>";
+                                echo "<td>".$row['sold']."</td>";
 
-                                                echo "<td>".$stock."</td>";
+                                echo "<td>".$stock."</td>";
 
-                                                echo "<td><a href='viewProduct.php?id=".$row['id']."' class='btn btn-success btn-sm'>".
-                                                    "<span class='glyphicon glyphicon-eye-open'></span> </a>";
-                                                echo "<a href='editProduct.php?id=".$row['id']."' class='btn btn-warning btn-sm'>".
-                                                    "<span class='glyphicon glyphicon-pencil'></span> </a>";
-                                                echo "<a href='deleteProduct.php?id=".$row['id']."' class='btn btn-danger btn-sm'>".
-                                                    "<span class='glyphicon glyphicon-trash'></span> </a></td>";
+                                echo "<td><a href='viewProduct.php?id=".$row['id']."' class='btn btn-success btn-sm'>".
+                                    "<span class='glyphicon glyphicon-eye-open'></span> </a>";
+                                echo "<a href='editProduct.php?id=".$row['id']."' class='btn btn-warning btn-sm'>".
+                                    "<span class='glyphicon glyphicon-pencil'></span> </a>";
+                                echo "<a href='deleteProduct.php?id=".$row['id']."' class='btn btn-danger btn-sm'>".
+                                    "<span class='glyphicon glyphicon-trash'></span> </a></td>";
 
-                                            }
-                                        } else{
-                                            echo "No results found!";
-                                        }
+                            }
+                        } else{
+                            echo "No results found!";
+                        }
 
-                                    ?>
+                    ?>
                                 </tbody>
                             </table>
                         </div>
