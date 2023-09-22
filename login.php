@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 $_SESSION['user']='';
 $_SESSION['userid']='';
@@ -8,18 +7,19 @@ include "auth/connection.php";
 $conn=connect();
 $m= '';
 if(isset($_POST['submit'])){
-    $uName=$_POST['uname'];
-    $pass=$_POST['pass'];
+    $uName= mysqli_real_escape_string($conn, $_POST['uname']);
+    $pass= mysqli_real_escape_string($conn, $_POST['pass']);
 
     $sql="SELECT*FROM users_info WHERE uname='$uName' and password='$pass'";
     $res=$conn->query($sql);
 
     if(mysqli_num_rows($res)==1){
-
         $user=mysqli_fetch_assoc($res);
+        $id=$user['id'];
+        $sq="UPDATE users_info SET last_login_time=current_timestamp()WHERE id='$id'";
+        $conn->query($sq);
         $_SESSION['user']=$user['name'];
-        $_SESSION['userid']=$user['userid'];
-
+        $_SESSION['userid']=$user['id'];
         header('Location:dashboard.php');
     }else{
 

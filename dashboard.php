@@ -2,7 +2,7 @@
 
 session_start();
 include ('navigation.php');
-include('auth/connection.php');
+//include('auth/connection.php');
 
 $date=date('Y-m-d',strtotime('-7 days'));
 $conn=connect();
