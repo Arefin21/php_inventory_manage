@@ -17,3 +17,24 @@ function checkUsername(val){
     }
 
 }
+
+function checkUser(val){
+    $.ajax({
+        url:'duplicateUsers.php',
+        method:'POST',
+        data:{
+            'username':val
+        },
+        async:false
+    }).done(function(data){
+        var check=JSON.parse(data);
+        if(check.success==true){
+            $('#checkuser').html('This username is already taken');
+            $('#checkuser').css('color','red');
+            $('#uname').val('');
+        }else{
+            $('#checkuser').html('Username Avaiable');
+            $('#checkuser').css('color','lightgreen');
+        }
+    });
+}

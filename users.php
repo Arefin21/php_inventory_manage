@@ -148,7 +148,7 @@
                             </div>
                             <div class="col-sm-8">
                                 <input name="uname" type="text" class="login-input" placeholder="Product Name"
-                                 id="name" value="<?php echo $thisUser['name']?>" required>
+                                 id="uname" value="<?php echo $thisUser['name']?>" required>
                             </div>
                         </div>
                         <div class="form-group pt-20">

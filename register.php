@@ -10,6 +10,9 @@ if(isset($_POST['submit'])){
     $rpass=$_POST['rpass'];
 
     if($pass===$rpass){
+
+       // $pass=md5($pass);
+
         $sql="INSERT INTO users_info(name,uname,email,password)VALUES('$name','$uname','$email','$pass')";
     
         if($conn->query($sql)===true){
@@ -49,8 +52,9 @@ if(isset($_POST['submit'])){
     </div>
     <div>
         <label>Your UnserName<span>*</span></label>
-        <input name="uname" id="u_name" type="text" placeholder="Enter Your UserName" onchange="checkUsername(this.value);" required>
+        <input name="uname" id="uname" type="text" placeholder="Enter Your UserName" onchange="checkUsername(this.value); checkUser(this.value);" required>
         <small style="color:red;" id="checktext"></small>
+        <small  id="checkuser"></small>
     </div>
     <div>
         <label>Your Email<span>*</span></label>
