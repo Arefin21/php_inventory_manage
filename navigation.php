@@ -4,6 +4,7 @@ $conn=connect();
     $user= $_SESSION['user'];
     $userid= $_SESSION['userid'];
 
+
     if(!$_SESSION['userid']){
         header("Location: login.php");
     }
@@ -36,8 +37,11 @@ $conn=connect();
                     <li><a class="active" href="dashboard.php">MyInventory</a></li>
                     <li><a href="products.php">Products</a></li>
                     <li><a href="users.php">Users</a></li>
-                    
-                    <li><a href="#">Customers</a></li>
+                    <?php
+                    if($thisUser['is_admin']==1){
+                    echo ' <li><a href="customer.php">Customers</a></li>';
+                    }
+                    ?>
                     <li style="float: right;"><a href="logout.php" style="padding: 0px 20px 0px 0px;"><button class="btn btn-danger navbar-btn pull-right">Logout</button></a></li>
                     <li class="pull-right"><a href="#">Logged in as <b class="user"><?php echo $user; ?></b></a></li>
 

@@ -37,7 +37,7 @@ if(isset($_POST['submit'])){
 <body>
     <form method="POST" action="register.php" enctype="multipart/form-data">
 
-        <div class="container">
+        <div class="container reg">
 
         <span><?php if($m!='') echo $m; ?></span>
 <h1>Registration Form</h1>
@@ -49,7 +49,8 @@ if(isset($_POST['submit'])){
     </div>
     <div>
         <label>Your UnserName<span>*</span></label>
-        <input name="uname" id="u_name" type="text" placeholder="Enter Your UserName" required>
+        <input name="uname" id="u_name" type="text" placeholder="Enter Your UserName" onchange="checkUsername(this.value);" required>
+        <small style="color:red;" id="checktext"></small>
     </div>
     <div>
         <label>Your Email<span>*</span></label>
@@ -81,5 +82,18 @@ if(isset($_POST['submit'])){
     
     </form>
 </body>
+<script type='text/javascript' src="js/script.js">
+
+</script>
 </html>
 
+<script>
+    // window.onload=function(){
+    //     document.getElementsByClassName('reg')[0].style.color='#ffce00';
+    // };
+
+    $(document).ready(function(){
+        $('.reg').css('color','#ffce00');
+    });
+
+</script>

@@ -211,7 +211,12 @@
                                 <tr>
                                     <th data-field="data" data-filter-control="select" data-sortable="true">User</th>
                                     <th data-field="examen" data-filter-control="select" data-sortable="true"> Email</th>
-                                    <th data-field="note" data-sortable="true">Is Active</th>
+                                    <?php
+                                    if($thisUser['is_admin']==1){
+
+                                      echo  '<th data-field="note" data-sortable="true">Is Active</th>';
+                                    }
+                                    ?>
                                     <th data-field="note" data-sortable="true">Last Login Time</th>
                                 </tr>
                                 </thead>
@@ -227,7 +232,14 @@
                                 echo '<tr>';
                                 echo '<td>'.$row['name'].'</td>';
                                 echo '<td>'.$row['email'].'</td>';
+                                if($thisUser['is_admin']==1){
+                                    if($row['is_active']==1){
+                                        $active="Active";
+                                    }else{
+                                        $active="Inactive";
+                                    }
                                 echo '<td>'.$active.'</td>';
+                            }
                                 echo '<td>'.date("Y-m-d h:i:sa",strtotime($row['last_login_time'])).'</td>';
                                 echo '</tr>';
                             }
